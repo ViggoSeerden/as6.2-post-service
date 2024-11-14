@@ -1,3 +1,9 @@
+using MongoDB.Driver;
+using PostServiceBusiness.Interfaces;
+using PostServiceBusiness.Services;
+using PostServiceDAL;
+using PostServiceDAL.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -5,6 +11,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
+
+builder.Services.AddScoped<IPostRepository, PostRepository>();
+builder.Services.AddScoped<PostServiceBusiness.Services.PostService>();
+
+builder.Services.AddHostedService<MessageReceiver>();
+
+var mongoClient = new MongoClient(Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection"));
+builder.Services.AddSingleton<IMongoClient, MongoClient>(sp => mongoClient);
 
 var app = builder.Build();
 

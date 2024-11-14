@@ -4,6 +4,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostService", "PostService\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostIntegrationTests", "PostIntegrationTests\PostIntegrationTests.csproj", "{8EFEA5FC-90C9-4BF5-B567-0776B8A825DE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostServiceBusiness", "PostServiceBusiness\PostServiceBusiness.csproj", "{59B21E41-9C33-4A1E-8BA6-464249EDC99B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostServiceDAL", "PostServiceDAL\PostServiceDAL.csproj", "{9DAC96D2-CAE3-4591-B2CE-AE8C1D2A1706}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +22,13 @@ Global
 		{8EFEA5FC-90C9-4BF5-B567-0776B8A825DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8EFEA5FC-90C9-4BF5-B567-0776B8A825DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8EFEA5FC-90C9-4BF5-B567-0776B8A825DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59B21E41-9C33-4A1E-8BA6-464249EDC99B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59B21E41-9C33-4A1E-8BA6-464249EDC99B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59B21E41-9C33-4A1E-8BA6-464249EDC99B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59B21E41-9C33-4A1E-8BA6-464249EDC99B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DAC96D2-CAE3-4591-B2CE-AE8C1D2A1706}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DAC96D2-CAE3-4591-B2CE-AE8C1D2A1706}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DAC96D2-CAE3-4591-B2CE-AE8C1D2A1706}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DAC96D2-CAE3-4591-B2CE-AE8C1D2A1706}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
