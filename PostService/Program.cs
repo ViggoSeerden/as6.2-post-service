@@ -1,7 +1,6 @@
 using MongoDB.Driver;
 using PostServiceBusiness.Interfaces;
 using PostServiceBusiness.Services;
-using PostServiceDAL;
 using PostServiceDAL.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
