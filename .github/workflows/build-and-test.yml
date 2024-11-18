@@ -20,6 +20,8 @@ jobs:
         dotnet-version: 8.0.x
     - name: Restore dependencies
       run: dotnet restore
+    - name: Start MongoDB
+      uses: supercharge/mongodb-github-action@1.11.0
     - name: Build
       run: dotnet build --no-restore
     - name: Run tests
