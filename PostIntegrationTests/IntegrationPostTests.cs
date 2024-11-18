@@ -29,7 +29,7 @@ namespace PostIntegrationTests
         [TestMethod]
         public async Task GetSkeleton()
         {
-            var response = await _client.GetAsync("/posts/skeleton");
+            var response = await _client.GetAsync("/api/skeleton");
             var value = await response.Content.ReadAsStringAsync();
 
             response.EnsureSuccessStatusCode();
