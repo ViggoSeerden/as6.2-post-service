@@ -25,4 +25,6 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Run tests
+      env:
+        ConnectionStrings__DefaultConnection: ${{ secrets.CONNECTION_STRING }}
       run: dotnet test ./PostIntegrationTests/PostIntegrationTests.csproj
