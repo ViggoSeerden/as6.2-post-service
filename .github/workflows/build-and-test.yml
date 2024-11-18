@@ -2,7 +2,7 @@ name: Build and Test
 
 on:
   push:
-    branches: 
+    branches:
       - '**'
   # pull_request:
   #   branches:
@@ -13,18 +13,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 8.0.x
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Start MongoDB
-      uses: supercharge/mongodb-github-action@1.11.0
-    - name: Build
-      run: dotnet build --no-restore
-    - name: Run tests
-      env:
-        ConnectionStrings__DefaultConnection: ${{ secrets.CONNECTION_STRING }}
-      run: dotnet test ./PostIntegrationTests/PostIntegrationTests.csproj
+      - uses: actions/checkout@v4
+      - name: Start RabbitMQ
+        uses: namoshek/rabbitmq-github-action@v1
+        with:
+          ports: '5672:5672 15672:15672'
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Start MongoDB
+        uses: supercharge/mongodb-github-action@1.11.0
+      - name: Build
+        run: dotnet build --no-restore
+      - name: Run tests
+        env:
+          ConnectionStrings__DefaultConnection: ${{ secrets.CONNECTION_STRING }}
+        run: dotnet test ./PostIntegrationTests/PostIntegrationTests.csproj
