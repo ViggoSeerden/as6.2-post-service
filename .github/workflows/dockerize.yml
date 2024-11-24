@@ -1,10 +1,9 @@
-name: Build and Push Docker Image
+name: Dockerize
 
 on:
   push:
     branches:
-      - main
-      - pipeline-test  
+      - "**" 
 
 jobs:
   Docker:
@@ -25,4 +24,4 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: ${{ secrets.REGISTRY_USERNAME }}/as6-2_osso_post_service:latest
+          tags: "${{ secrets.REGISTRY_USERNAME }}/as6-2_osso_post_service:${{ github.ref_name }}"

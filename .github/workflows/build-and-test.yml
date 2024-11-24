@@ -31,4 +31,6 @@ jobs:
       - name: Run tests
         env:
           ConnectionStrings__DefaultConnection: ${{ secrets.CONNECTION_STRING }}
+          Auth__Domain: "${{ secrets.AUTH0_DOMAIN }}"
+          Auth__Audience: "${{ secrets.AUTH0_AUDIENCE }}"
         run: dotnet test ./PostIntegrationTests/PostIntegrationTests.csproj

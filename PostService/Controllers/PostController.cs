@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace PostService.Controllers;
@@ -7,6 +8,7 @@ namespace PostService.Controllers;
 public class PostController(PostServiceBusiness.Services.PostService postService) : ControllerBase
 {
     [HttpGet("")]
+    [Authorize("read:posts")]
     public async Task<IActionResult> GetAllPosts()
     {
         var posts = await postService.GetAllPostsAsync();
