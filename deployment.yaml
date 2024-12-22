@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: post-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: post-service
+  template:
+    metadata:
+      labels:
+        app: post-service
+    spec:
+      containers:
+        - name: post-service
+          image: PLACEHOLDER_AZURE_CONTAINER_REGISTRY.azurecr.io/as6-2_osso_post_service:main
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: ConnectionStrings__DefaultConnection
+              valueFrom:
+                secretKeyRef:
+                  name: secrets
+                  key: MONGO_AZURE_CONNECTION_STRING
+            - name: RabbitMQ
+              valueFrom:
+                secretKeyRef:
+                  name: secrets
+                  key: RABBITMQ
+            - name: Auth__Domain
+              valueFrom:
+                secretKeyRef:
+                  name: secrets
+                  key: AUTH0_DOMAIN
+            - name: Auth__Audience
+              valueFrom:
+                secretKeyRef:
+                  name: secrets
+                  key: AUTH0_AUDIENCE
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: post-service
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: post-service
+  type: ClusterIP
