@@ -21,21 +21,29 @@ public class PostRepository() : IPostRepository
     
     public Task<Post> GetByIdAsync(Guid id)
     {
-        return null;
+        var filter = Builders<Post>.Filter.Eq(post => post.Id, id);
+        return _postCollection.Find(filter).FirstOrDefaultAsync();
     }
 
     public Task AddAsync(Post post)
     {
-        return null;
+        return _postCollection.InsertOneAsync(post);
     }
 
-    public Task UpdateAsync(Post post)
+    public Task UpdateAsync(Guid id, Post updatedPost)
     {
-        return null;
+        var filter = Builders<Post>.Filter.Eq(post => post.Id, id);
+        var update = Builders<Post>.Update
+            .Set(post => post.City, updatedPost.City)
+            .Set(post => post.Street, updatedPost.Street)
+            .Set(post => post.Description, updatedPost.Description);
+        
+        return _postCollection.UpdateOneAsync(filter, update);
     }
 
     public Task DeleteAsync(Guid id)
     {
-        return null;
+        var filter = Builders<Post>.Filter.Eq(post => post.Id, id);
+        return _postCollection.DeleteOneAsync(filter);
     }
 }

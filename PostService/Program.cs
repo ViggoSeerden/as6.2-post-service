@@ -8,6 +8,7 @@ using PostService;
 using PostServiceBusiness.Interfaces;
 using PostServiceBusiness.Services;
 using PostServiceDAL.Repositories;
+using RabbitMQ.Client;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +21,22 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<IPostRepository, PostRepository>();
 builder.Services.AddScoped<PostServiceBusiness.Services.PostService>();
 
-builder.Services.AddHostedService<MessageReceiver>();
+try
+{
+    ConnectionFactory factory = new()
+        { HostName = Environment.GetEnvironmentVariable("RabbitMQ") ?? "localhost" };
+
+    IConnection conn = await factory.CreateConnectionAsync();
+    IChannel channel = await conn.CreateChannelAsync();
+
+    builder.Services.AddSingleton(channel);
+    builder.Services.AddScoped<MessageProducer>();
+    builder.Services.AddHostedService<MessageReceiver>();
+} catch (Exception e)
+{
+    Console.WriteLine("Error connecting to RabbitMQ");
+    Console.WriteLine(e.Message);
+}
 
 // Database Context
 var mongoClient = new MongoClient(Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection"));

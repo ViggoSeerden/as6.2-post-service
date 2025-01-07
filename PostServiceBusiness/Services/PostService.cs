@@ -10,6 +10,6 @@ public class PostService(IPostRepository postRepository)
     public Task<List<Post>> GetAllPostsAsync() => _postRepository.GetAllAsync();
     public Task<Post> GetPostByIdAsync(Guid id) => _postRepository.GetByIdAsync(id);
     public Task AddPostAsync(Post post) => _postRepository.AddAsync(post);
-    public Task UpdatePostAsync(Post post) => _postRepository.UpdateAsync(post);
+    public Task UpdatePostAsync(Guid id, Post post) => _postRepository.UpdateAsync(id, post);
     public Task DeletePostAsync(Guid id) => _postRepository.DeleteAsync(id);
 }
