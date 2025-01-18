@@ -5,30 +5,21 @@ namespace PostServiceBusiness.Services;
 
 public class MessageProducer
 {
-    private readonly IModel _channel;
+    private readonly IChannel _channel;
 
-    public MessageProducer()
+    public MessageProducer(IChannel channel)
     {
-        var factory = new ConnectionFactory { HostName = Environment.GetEnvironmentVariable("RabbitMQ") ?? "localhost" };
-        var connection = factory.CreateConnection();
-        _channel = connection.CreateModel();
-
-        _channel.QueueDeclare(queue: "send-email",
-            durable: false,
-            exclusive: false,
-            autoDelete: false,
-            arguments: null);
+        _channel = channel;
     }
     
-    public void SendMessage()
+    public async void SendMessage(string routingKey, string content)
     {
-        const string message = "Send an Email";
-        var body = Encoding.UTF8.GetBytes(message);
+        var body = Encoding.UTF8.GetBytes(content);
 
-        _channel.BasicPublish(exchange: string.Empty,
-            routingKey: "send-email",
-            basicProperties: null,
+        await _channel.BasicPublishAsync(exchange: "osso-exchange",
+            routingKey: routingKey,
             body: body);
-        Console.WriteLine($" [x] Sent {message}");
+        
+        Console.WriteLine($" [x] Sent {content} with routing key {routingKey}");
     }
 }
